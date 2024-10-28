@@ -1,0 +1,12 @@
+{
+  "C_Cpp.intelliSenseEngine": "default",
+  "files.associations": {
+    "pretty_effect.h": "c",
+    "jpeg_decoder.h": "c",
+    "display_epd_w21.h": "c",
+    "display_epd_w21_spi.h": "c"
+  },
+  "idf.portWin": "COM15",
+  "idf.flashType": "UART",
+  "idf.adapterTargetName": "esp32"
+}

@@ -24,22 +24,12 @@
 
 void app_main(void)
 {
-    EPD_GPIO_Init();
+    EPD_GPIO_Init(); // gpio初始化
 
     EPD_HW_Init();                   // Full screen refresh initialization.
     EPD_WhiteScreen_White();         // Clear screen function.
     EPD_DeepSleep();                 // Enter the sleep mode and please do not delete it, otherwise it will reduce the lifespan of the screen.
     vTaskDelay(pdMS_TO_TICKS(2000)); // Delay for 2s.
-
-    // EPD_HW_Init();
-    // for (int i = 0; i < 100; i++)
-    //     EPD_Dis_Part_Time(16, 60 + 32 * 0, Num[i],          // x-A,y-A,DATA-A
-    //                       16, 60 + 32 * 1, Num[0],          // x-B,y-B,DATA-B
-    //                       16, 60 + 32 * 2, gImage_numdot,   // x-C,y-C,DATA-C
-    //                       16, 60 + 32 * 3, Num[0],          // x-D,y-D,DATA-D
-    //                       16, 60 + 32 * 4, Num[1], 32, 64); // x-E,y-E,DATA-E,Resolution 32*64
-    // EPD_DeepSleep();
-    // vTaskDelay(pdMS_TO_TICKS(2000));
 
     while (1)
     {

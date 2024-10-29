@@ -152,7 +152,7 @@ void EPD_WhiteScreen_White(void)
 	{
 		EPD_W21_WriteDATA(0xff);
 	}
-	EPD_Update();
+	EPD_Update_Fast();
 }
 // Display all black
 void EPD_WhiteScreen_Black(void)
@@ -459,4 +459,24 @@ void EPD_WhiteScreen_ALL_Fast2(const unsigned char *datas)
 		EPD_W21_WriteDATA(0x00);
 	}
 	EPD_Update_Fast();
+}
+
+int16_t EPD_Tempsensor_Read(void)
+{
+#ifdef INTERNAL_TEMPSENSOR_EN
+	uint8_t temp_data[2] = {0,0};
+	EPD_W21_WriteCMD(0x18);
+	EPD_W21_WriteDATA(0x80);
+	EPD_W21_WriteCMD(0x22);
+	EPD_W21_WriteDATA(0XB1);
+	EPD_W21_WriteCMD(0x20);
+	Epaper_READBUSY();
+
+	EPD_W21_WriteCMD(0x1B);
+	gpio_set_direction(MOSI, GPIO_MODE_INPUT);//MOSI管脚模式改为input
+	temp_data[0] = EPD_W21_ReadDATA();                         //读取温度数据
+	temp_data[1] = EPD_W21_ReadDATA();;
+	gpio_set_direction(MOSI, GPIO_MODE_OUTPUT);//MOSI管脚模式改为input
+	return ((temp_data[0]*256 + temp_data[1]) >> 4)/16;
+#endif
 }

@@ -15,6 +15,7 @@
 #define EPD_WIDTH   128 
 #define EPD_HEIGHT  250
 #define EPD_ARRAY  EPD_WIDTH*EPD_HEIGHT/8  
+#define INTERNAL_TEMPSENSOR_EN
 
 
 //Full screen refresh display
@@ -43,6 +44,8 @@ void EPD_WhiteScreen_ALL_Fast2(const unsigned char *datas);
 //GUI display					 
 void EPD_HW_Init_GUI(void); 
 void EPD_Display(unsigned char *Image); 
+
+int16_t EPD_Tempsensor_Read(void);/*温度传感器选择*/
 												 
 #endif
 

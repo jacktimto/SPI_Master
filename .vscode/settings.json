@@ -4,7 +4,8 @@
     "pretty_effect.h": "c",
     "jpeg_decoder.h": "c",
     "display_epd_w21.h": "c",
-    "display_epd_w21_spi.h": "c"
+    "display_epd_w21_spi.h": "c",
+    "gpio.h": "c"
   },
   "idf.portWin": "COM15",
   "idf.flashType": "UART",

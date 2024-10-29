@@ -1,7 +1,9 @@
 #include "Display_EPD_W21_spi.h"
+#include "esp_rom_sys.h"
 
 #define GPIO_OUTPUT_PIN_SEL (1ULL << MOSI) | (1ULL << SCK) | (1ULL << CS) | (1ULL << DC) | (1ULL << RST)
-#define GPIO_INPUT_PIN_SEL  (1ULL << BUSY)
+#define GPIO_INPUT_PIN_SEL (1ULL << BUSY)
+#define GPIO_MOSI_SEL (1ULL << MOSI) //
 // E-paper GPIO initialization
 void EPD_GPIO_Init(void)
 {
@@ -52,4 +54,33 @@ void EPD_W21_WriteDATA(unsigned char datas)
 	EPD_W21_DC_1; // D/C#   0:command  1:data
 	SPI_Write(datas);
 	EPD_W21_CS_1;
+}
+
+void SPI_Delay(unsigned char time)
+{
+	esp_rom_delay_us(time);
+}
+
+/*spi read data*/
+unsigned char EPD_W21_ReadDATA(void)
+{
+	unsigned char i, j = 0;
+	EPD_W21_CS_0;
+	EPD_W21_DC_1; // command write(Must be added)
+	SPI_Delay(2);
+	for (i = 0; i < 8; i++)
+	{
+		EPD_W21_CLK_0;
+		SPI_Delay(20);
+		j = (j << 1);
+		if (EPD_W21_READ == 1)
+			j |= 0x01;
+		else
+			j &= ~0x01;
+		SPI_Delay(20);
+		EPD_W21_CLK_1;
+		SPI_Delay(5);
+	}
+	EPD_W21_CS_1;
+	return (j);
 }
